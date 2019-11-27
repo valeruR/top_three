@@ -40,7 +40,7 @@ class DatabaseService {
       );
   }
 
-  // get brews stream
+  // get tops stream
   Stream<List<Top>> get brews {
     return movieCollection.snapshots()
       .map(_brewListFromSnapshort);

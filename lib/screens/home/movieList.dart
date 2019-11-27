@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:top_three/shared/constants.dart';
+import 'package:top_three/models/user.dart';
+
+import 'movieScreen.dart';
 
 class MovieList extends StatefulWidget {
   @override
@@ -12,6 +14,9 @@ class _MovieListState extends State<MovieList> {
   List listmovie;
   int page = 1;
   String tsearch = '';
+  String currmovie1 = '';
+  String currmovie2 = '';
+  String currmovie3 = '';
 
   void fetchPost(int ppage) async {
   final response =
@@ -72,25 +77,66 @@ void searchMovie() async {
             return Card(
               margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
               child: ListTile(
-              leading: CircleAvatar(
-                radius: 25.0,
-                backgroundImage: NetworkImage("https://image.tmdb.org/t/p/w500" + listmovie[idx]["poster_path"]),
-              ),
-              title: Text("${listmovie[idx]["title"]}"),
-              subtitle: ((listmovie[idx]["overview"]).length > 25) ? Text(("${listmovie[idx]["overview"]}").substring(0, 25)) : Text("${listmovie[idx]["overview"]}"),
+                leading: CircleAvatar(
+                  radius: 25.0,
+                  backgroundImage: NetworkImage("https://image.tmdb.org/t/p/w500" + listmovie[idx]["poster_path"]),
+                ),
+                title: Text("${listmovie[idx]["title"]}"),
+                subtitle: ((listmovie[idx]["overview"]).length > 25) ? Text(("${listmovie[idx]["overview"]}").substring(0, 25)) : Text("${listmovie[idx]["overview"]}"),
+                onTap: () async {
+                  var res = await Navigator.push(context, new MaterialPageRoute(
+                    builder: (context) => MovieScreen(movie: listmovie, idx: idx,)
+                  ));
+                  switch(res) {
+                    case 1:
+                      setState(() {
+                        currmovie1 = listmovie[idx]["title"];
+                      });
+                      print("movie1: " + currmovie1);
+                      break;
+                    case 2:
+                      setState(() {
+                        currmovie2 = listmovie[idx]["title"];
+                      });
+                      print("movie2: " + currmovie2);
+                      break;
+                    case 3:
+                      setState(() {
+                        currmovie3 = listmovie[idx]["title"];
+                      });
+                      print("movie3: " + currmovie3);
+                      break;
+                  };
+                },
               ),
             );
           },
         )
       ),
-      RaisedButton(
-        child: Text('Next'),
-        onPressed: () {
-          setState(() {
-             page++;
-           });
-           fetchPost(page);
-        }
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          RaisedButton(
+            child: Text('Prev'),
+            onPressed: () {
+              setState(() {
+                if (page > 1)
+                  page--;
+              });
+              fetchPost(page);
+            }
+          ),
+          RaisedButton(
+            child: Text('Next'),
+            onPressed: () {
+              setState(() {
+                page++;
+              });
+              fetchPost(page);
+            }
+          ),
+        ],
       ),
     ]
     );
