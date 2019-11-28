@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:top_three/models/user.dart';
+import 'package:top_three/services/database.dart';
 
 import 'movieScreen.dart';
 
@@ -20,7 +22,7 @@ class _MovieListState extends State<MovieList> {
 
   void fetchPost(int ppage) async {
   final response =
-      await http.get('https://api.themoviedb.org/3/movie/top_rated?api_key=d245d4a8771f14361b504065ae14fe78&language=en-US&page=$ppage');
+      await http.get('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=d245d4a8771f14361b504065ae14fe78&language=en-US&page=$ppage');
   Map data = json.decode(response.body);
   setState(() => listmovie = data["results"]);
 }
@@ -43,12 +45,22 @@ void searchMovie() async {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+
+  final user = Provider.of<User>(context);
+
+    return Scaffold( 
+    appBar: AppBar(
+      title: Text('Top Three'),
+          backgroundColor: Colors.brown[400],
+          elevation: 0.0,
+    ),
+    body: Column(
     children: [
       Container(
         width: 300.0,
           child: Column(
             children: <Widget>[
+              SizedBox(height: 20.0),
               TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -106,7 +118,7 @@ void searchMovie() async {
                       });
                       print("movie3: " + currmovie3);
                       break;
-                  };
+                  }
                 },
               ),
             );
@@ -136,9 +148,16 @@ void searchMovie() async {
               fetchPost(page);
             }
           ),
+          (currmovie1.isNotEmpty && currmovie2.isNotEmpty && currmovie3.isNotEmpty) ? RaisedButton(
+            child: Text('Create'),
+            onPressed: () async {
+              await DatabaseService(uid: user.uid).updateUserData(currmovie1, currmovie2, currmovie3);
+            }
+          ) : SizedBox(),
         ],
       ),
     ]
+    ),
     );
   }
 }

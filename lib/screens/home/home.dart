@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:top_three/models/movie.dart';
 import 'package:top_three/models/top.dart';
 import 'package:top_three/screens/home/movieList.dart';
+import 'package:top_three/screens/home/topList.dart';
 // import 'package:tuto_ninja/screens/home/brew_list.dart';
 // import 'package:tuto_ninja/screens/home/settings_form.dart';
 import 'package:top_three/services/auth.dart';
@@ -40,15 +41,19 @@ class Home extends StatelessWidget {
                  await _auth.signOut();
               },
             ),
-            /* FlatButton.icon(
-              icon: Icon(Icons.settings),
-              label: Text('Settings'),
-              onPressed: () => _showSettingsPanel(),
-            ),*/
+             FlatButton.icon(
+              icon: Icon(Icons.library_add),
+              label: Text('Your List'),
+              onPressed: () {
+                Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => MovieList(),
+                ));
+              },
+            ),
           ],
         ),
         body: Container(
-          child: MovieList(),
+          child: TopList(),
         ),
       ),
     );
