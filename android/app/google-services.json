@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "38020337162",
+    "firebase_url": "https://topthree-137fb.firebaseio.com",
+    "project_id": "topthree-137fb",
+    "storage_bucket": "topthree-137fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38020337162:android:3d12f2c8599d0c2a3c19f3",
+        "android_client_info": {
+          "package_name": "com.topthree.top_three"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38020337162-dnvq8iul6d7e4afp8b3v3sj4915d3pd6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAziEzQvu81r4p776-9AqEn5_huE-9Fpnc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38020337162-dnvq8iul6d7e4afp8b3v3sj4915d3pd6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "38020337162-e27u1eb4ptcg6957v2unuhi68jn0g33h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.reever.topThree"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

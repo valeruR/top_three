@@ -11,11 +11,12 @@ class DatabaseService {
   // collection reference
   final CollectionReference movieCollection = Firestore.instance.collection('movies');
 
-  Future updateUserData(String one, String two, String three) async {
+  Future updateUserData(String one, String two, String three, {String pic = ''}) async {
     return await movieCollection.document(uid).setData({
       'one': one,
       'two': two,
       'three': three,
+      'picture': pic,
     });
   }
 
@@ -26,6 +27,7 @@ class DatabaseService {
         one: doc.data['one'] ?? '',
         two: doc.data['two'] ?? '',
         three: doc.data['three'] ?? '', 
+        picture: doc.data['picture'] ?? '',
       );
     }).toList();
   }
@@ -37,6 +39,7 @@ class DatabaseService {
         one: snapshot.data['one'],
         two: snapshot.data['two'],
         three: snapshot.data['three'],
+        picture: snapshot.data['picture'],
       );
   }
 

@@ -8,6 +8,24 @@ import 'package:top_three/services/database.dart';
 import 'movieScreen.dart';
 
 class MovieList extends StatefulWidget {
+  String currmovie1;
+  String currmovie2;
+  String currmovie3;
+
+  MovieList({this.currmovie1, this.currmovie2, this.currmovie3});
+
+  set movieone(String name) {
+    currmovie1 = name;
+  }
+
+  set movietwo(String name) {
+    currmovie2 = name;
+  }
+
+  set moviethree(String name) {
+    currmovie3 = name;
+  }  
+
   @override
   _MovieListState createState() => _MovieListState();
 }
@@ -16,9 +34,9 @@ class _MovieListState extends State<MovieList> {
   List listmovie;
   int page = 1;
   String tsearch = '';
-  String currmovie1 = '';
-  String currmovie2 = '';
-  String currmovie3 = '';
+  String one = '';
+  String two = '';
+  String three = '';
 
   void fetchPost(int ppage) async {
   final response =
@@ -102,21 +120,27 @@ void searchMovie() async {
                   switch(res) {
                     case 1:
                       setState(() {
-                        currmovie1 = listmovie[idx]["title"];
+                        one = listmovie[idx]["title"];
                       });
-                      print("movie1: " + currmovie1);
+                      print("movie1: " + one);
+                      print("movie2: " + two);
+                      print("movie3: " + three);
                       break;
                     case 2:
                       setState(() {
-                        currmovie2 = listmovie[idx]["title"];
+                        two = listmovie[idx]["title"];
                       });
-                      print("movie2: " + currmovie2);
+                      print("movie1: " + one);
+                      print("movie2: " + two);
+                      print("movie3: " + three);
                       break;
                     case 3:
                       setState(() {
-                        currmovie3 = listmovie[idx]["title"];
+                        three = listmovie[idx]["title"];
                       });
-                      print("movie3: " + currmovie3);
+                      print("movie1: " + one);
+                      print("movie2: " + two);
+                      print("movie3: " + three);
                       break;
                   }
                 },
@@ -148,10 +172,15 @@ void searchMovie() async {
               fetchPost(page);
             }
           ),
-          (currmovie1.isNotEmpty && currmovie2.isNotEmpty && currmovie3.isNotEmpty) ? RaisedButton(
+          ((one.isNotEmpty || widget.currmovie1.isNotEmpty) &&
+            (two.isNotEmpty || widget.currmovie2.isNotEmpty) &&
+            (three.isNotEmpty || widget.currmovie3.isNotEmpty)) ? RaisedButton(
             child: Text('Create'),
             onPressed: () async {
-              await DatabaseService(uid: user.uid).updateUserData(currmovie1, currmovie2, currmovie3);
+              await DatabaseService(uid: user.uid).updateUserData((one.isNotEmpty) ? one : widget.currmovie1,
+                                                                  (two.isNotEmpty) ? two : widget.currmovie2, 
+                                                                  (three.isNotEmpty) ? three : widget.currmovie3);
+              Navigator.pop(context);
             }
           ) : SizedBox(),
         ],

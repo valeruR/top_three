@@ -9,6 +9,7 @@ class UserData {
   final String one;
   final String two;
   final String three;
+  final String picture;
 
-  UserData({ this.uid, this.one, this.two, this.three });
+  UserData({ this.uid, this.one, this.two, this.three, this.picture });
 }

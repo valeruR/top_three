@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:top_three/models/user.dart';
 
 class MovieScreen extends StatelessWidget {
   final List movie;
   final int idx;
-  int number = 0;
-  String title = '';
 
   MovieScreen({ Key key,
     @required this.movie,
